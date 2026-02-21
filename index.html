@@ -1,37 +1,138 @@
-<script>
-    // Database Solusi Random Quantum V8.0
-    const solusiMagic = [
-        "Sabar ya cantik, rintangan itu cuma buat bikin lu makin kuat kaya BoBoiBoy Ice! ❄️",
-        "Jangan sedih terus, mending dengerin Arijit Singh dulu biar galau lu estetik. 🎶",
-        "Lu itu berharga, nj! Jangan biarin satu masalah ngerusak senyum magic lu. 😊",
-        "Istirahat dulu, tarik napas. Masalah dunia gak bakal selesai kalau lu telat makan!",
-        "Inget, ada gw (dan cowok lu yang ganteng ini) yang selalu dukung lu 100%!",
-        "Kadang hidup emang kaya sinetron Indosiar, penuh drama tapi endingnya pasti bahagia!",
-        "Jangan dengerin omongan Adu Du di luar sana, lu tetep yang terbaik! 🌀"
-    ];
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Elemental Secret 🌀</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background: linear-gradient(to bottom, #1e40af, #1e1b4b, #000000); 
+            font-family: 'Quicksand', sans-serif; 
+            color: white; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .font-boboiboy { font-family: 'Fredoka One', cursive; }
+        .glass { 
+            background: rgba(30, 58, 138, 0.4); 
+            backdrop-filter: blur(10px); 
+            border: 2px solid rgba(147, 197, 253, 0.3); 
+            border-radius: 30px; 
+        }
+        .ice-effect {
+            text-shadow: 0 0 10px #60a5fa, 0 0 20px #60a5fa;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .floating-element {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.2;
+            animation: float 6s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center p-4">
 
-    function saveToLocal() {
-        const curhat = document.getElementById('diaryBox').value;
-        if(curhat.length < 5) {
-            alert('Curhatnya pendek amat, su! Cerita lagi dong.');
-            return;
+    <div class="floating-element text-6xl top-10 left-10">❄️</div>
+    <div class="floating-element text-5xl bottom-20 right-10" style="animation-delay: 2s;">🌀</div>
+    <div class="floating-element text-4xl top-1/2 left-5" style="animation-delay: 4s;">💎</div>
+
+    <div id="loginScreen" class="glass p-10 w-full max-w-sm text-center my-auto shadow-2xl">
+        <h1 class="font-boboiboy text-4xl text-blue-300 ice-effect mb-2">KUASA BIRU!</h1>
+        <p class="text-xs text-blue-100 mb-8">"Hanya untuk Tuan Putri penyuka Milen & BoBoiBoy..."</p>
+        <div class="relative mb-6">
+            <input type="password" id="passInput" class="w-full p-4 rounded-2xl bg-blue-900/60 border-2 border-blue-400 text-center text-white focus:outline-none focus:border-blue-300 transition" placeholder="Sebut Password Rahasia...">
+        </div>
+        <button onclick="checkPass()" class="w-full bg-blue-500 hover:bg-blue-400 py-4 rounded-2xl font-bold text-white shadow-lg transform active:scale-95 transition">AKTIFKAN KUASA! ⚡</button>
+    </div>
+
+    <div id="mainContent" class="hidden w-full max-w-lg space-y-8 pt-10 pb-20">
+        
+        <div class="glass p-8 text-center relative overflow-hidden">
+            <div class="absolute -top-5 -right-5 text-4xl opacity-20 rotate-12">🌀</div>
+            <h2 class="font-boboiboy text-2xl text-blue-300 italic">Dunia Biru Si Paling Magic 💙</h2>
+            <p class="text-sm text-blue-100 mt-2">Simpen semua rahasia lu di sini, nj! Gak bakal ada Adu Du atau pihak luar yang bisa liat.</p>
+        </div>
+
+        <div class="glass p-8 shadow-2xl border-l-8 border-blue-400">
+            <h2 class="font-boboiboy text-xl text-blue-300 mb-4 flex items-center">📝 Catatan Elemental</h2>
+            <textarea id="diaryBox" class="w-full h-48 bg-blue-950/40 p-4 rounded-2xl border-none focus:ring-2 focus:ring-blue-400 text-blue-50 placeholder-blue-400/50 resize-none" placeholder="Ceritain hari lu, atau mau maki-maki orang juga boleh, su..."></textarea>
+            <button onclick="saveToLocal()" class="w-full mt-5 bg-gradient-to-r from-blue-600 to-indigo-600 py-4 rounded-2xl font-bold hover:from-blue-500 hover:to-indigo-500 transition shadow-lg">Simpan Ke Memori (Aman 100%)</button>
+        </div>
+
+        <div class="glass p-8">
+            <h2 class="font-boboiboy text-xl text-blue-300 mb-5">📸 Gallery Kenangan Kita</h2>
+            <div id="gallery" class="grid grid-cols-2 gap-4 mb-6"></div>
+            <input type="file" id="upload" class="hidden" multiple onchange="handleFiles(this.files)">
+            <label for="upload" class="block w-full text-center bg-blue-800/50 border-2 border-dashed border-blue-300 py-5 rounded-2xl cursor-pointer hover:bg-blue-700/50 transition">
+                <span class="text-blue-200">Tambah Foto (Max Kuasa!)</span>
+            </label>
+        </div>
+        
+        <div class="text-center opacity-50 text-xs mt-10">
+            Arulmodss Project v8.0 | Quantum Engine 🚀
+        </div>
+    </div>
+
+    <script>
+        const PIN = "ice"; // Passwordnya 'ice', ganti sendiri kalo mau, nj!
+
+        function checkPass() {
+            const input = document.getElementById('passInput').value.toLowerCase();
+            if(input === PIN) {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
+                loadData();
+            } else {
+                alert('Salah, su! Belum dapet izin dari BoBoiBoy Ice lu ya?');
+            }
         }
 
-        localStorage.setItem('blueDiary', curhat);
-        
-        // Kasih Solusi Otomatis
-        const randomSolusi = solusiMagic[Math.floor(Math.random() * solusiMagic.length)];
-        
-        // Tampilkan Box Solusi
-        const responseBox = document.getElementById('aiResponse');
-        responseBox.classList.remove('hidden');
-        document.getElementById('solusiText').innerText = randomSolusi;
-        
-        alert('Curhatan lu udah aman di memori HP, nj!');
-    }
-</script>
+        function saveToLocal() {
+            const content = document.getElementById('diaryBox').value;
+            localStorage.setItem('elementalDiary', content);
+            alert('Selesai! Data lu udah dibekuin di memori browser, asu!');
+        }
 
-<div id="aiResponse" class="hidden mt-4 p-4 bg-blue-400/20 border border-blue-300 rounded-2xl animate-bounce">
-    <p class="text-xs font-bold text-blue-200">✨ Pesan Magic Buat Lu:</p>
-    <p id="solusiText" class="text-sm italic text-white mt-1"></p>
-</div>
+        function handleFiles(files) {
+            for (let file of files) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const gallery = document.getElementById('gallery');
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = "rounded-2xl w-full h-40 object-cover border-2 border-blue-400/50 shadow-blue-500/20 shadow-lg";
+                    gallery.appendChild(img);
+                    
+                    const photos = JSON.parse(localStorage.getItem('elementalPhotos') || '[]');
+                    photos.push(e.target.result);
+                    localStorage.setItem('elementalPhotos', JSON.stringify(photos));
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function loadData() {
+            document.getElementById('diaryBox').value = localStorage.getItem('elementalDiary') || '';
+            const photos = JSON.parse(localStorage.getItem('elementalPhotos') || '[]');
+            const gallery = document.getElementById('gallery');
+            photos.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = "rounded-2xl w-full h-40 object-cover border-2 border-blue-400/50";
+                gallery.appendChild(img);
+            });
+        }
+    </script>
+</body>
+</html>
