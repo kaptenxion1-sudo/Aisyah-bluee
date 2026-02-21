@@ -7,131 +7,138 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 50%, #000000 100%); 
-            font-family: 'Quicksand', sans-serif; 
-            color: white; 
-            min-height: 100vh;
-            margin: 0;
-        }
+        body { background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 50%, #000000 100%); font-family: 'Quicksand', sans-serif; color: white; min-height: 100vh; margin: 0; }
         .font-magic { font-family: 'Fredoka One', cursive; }
-        .glass { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(147, 197, 253, 0.2); 
-            border-radius: 30px; 
-        }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(147, 197, 253, 0.2); border-radius: 30px; }
         .hidden { display: none !important; }
-        input::placeholder, textarea::placeholder { color: rgba(147, 197, 253, 0.5); }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #60a5fa; border-radius: 10px; }
     </style>
 </head>
 <body class="flex flex-col items-center p-4">
 
     <div id="loginScreen" class="glass p-10 w-full max-w-sm text-center my-auto shadow-2xl mt-20">
-        <h1 class="font-magic text-3xl text-blue-300 mb-2">Selamat Datang ✨</h1>
-        <p class="text-xs text-blue-200 mb-8 italic">Silakan masukkan kata sandi rahasia kita...</p>
+        <h1 class="font-magic text-3xl text-blue-300 mb-2 text-shadow">Selamat Datang ✨</h1>
+        <p class="text-xs text-blue-200 mb-8 italic">Gunakan kata sandi rahasia: biru</p>
         <input type="password" id="passInput" class="w-full p-4 rounded-2xl bg-blue-900/40 border border-blue-400 text-center text-white focus:outline-none focus:ring-2 focus:ring-blue-300 transition" placeholder="Kata Sandi...">
-        <button onclick="checkPass()" class="w-full mt-6 bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold transition shadow-lg">Buka Dunia Kita 💙</button>
+        <button onclick="checkPass()" class="w-full mt-6 bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold transition">Buka Dunia Kita 💙</button>
     </div>
 
     <div id="mainContent" class="hidden w-full max-w-lg space-y-6 pt-6 pb-20">
         
         <div class="glass p-6">
-            <h2 class="font-magic text-sm text-blue-300 mb-3 flex items-center">🎵 Teman Setia: Arijit Singh</h2>
+            <h2 class="font-magic text-sm text-blue-300 mb-3">🎵 Putar Musik Arijit Singh</h2>
             <select id="songSelect" onchange="changeSong()" class="w-full p-3 rounded-xl bg-blue-950 border border-blue-700 text-blue-200 text-sm mb-4 outline-none">
-                <option value="4E6S8K9QY53u5h6P5iN3v7">Tum Hi Ho - Arijit Singh</option>
-                <option value="1tp096c601614051842">Kesariya - Arijit Singh</option>
-                <option value="599692429672054784">Chaleya - Arijit Singh</option>
-                <option value="093556093510521111">Heeriye - Arijit Singh</option>
+                <option value="https://www.youtube.com/embed/093556093510521111">Tum Hi Ho (Favorit)</option>
+                <option value="https://www.youtube.com/embed/V7LwfY5X5oc">Kesariya (Romantis)</option>
+                <option value="https://www.youtube.com/embed/HqUeSjsYLNU">Chaleya (Jawan)</option>
             </select>
-            <iframe id="spotifyPlayer" style="border-radius:12px" src="https://open.spotify.com/embed/track/4E6S8K9QY53u5h6P5iN3v7" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+            <div class="relative w-full overflow-hidden rounded-2xl shadow-lg" style="padding-top: 56.25%;">
+                <iframe id="musicPlayer" class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/093556093510521111" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
         </div>
 
         <div class="glass p-8 border-t-4 border-blue-400">
             <h2 class="font-magic text-xl text-blue-300 mb-4">📝 Ruang Curhat</h2>
-            <p class="text-[10px] text-blue-200 mb-2 italic">Tuliskan apa pun yang ada di pikiranmu hari ini...</p>
-            <textarea id="diaryBox" class="w-full h-44 bg-blue-900/10 p-4 rounded-2xl border border-blue-800 text-blue-50 focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none" placeholder="Ceritakan di sini..."></textarea>
-            <button onclick="saveToLocal()" class="w-full mt-4 bg-blue-700 hover:bg-blue-600 py-3 rounded-xl font-bold shadow-md transition">Simpan Ceritaku ✨</button>
+            <textarea id="diaryBox" class="w-full h-32 bg-blue-900/10 p-4 rounded-2xl border border-blue-800 text-blue-50 focus:outline-none resize-none" placeholder="Ceritakan hari ini..."></textarea>
+            <button onclick="saveCurhat()" class="w-full mt-4 bg-blue-700 hover:bg-blue-600 py-3 rounded-xl font-bold shadow-md transition">Simpan & Dengar Jawaban ✨</button>
             
             <div id="aiResponse" class="hidden mt-6 p-5 bg-blue-400/10 border border-blue-300/30 rounded-2xl text-center">
-                <p class="text-[10px] uppercase tracking-widest font-bold text-blue-300 mb-2">Pesan Untukmu</p>
+                <p class="text-[10px] uppercase font-bold text-blue-300 mb-1">Pesan Untukmu:</p>
                 <p id="solusiText" class="text-sm italic text-blue-50"></p>
             </div>
+        </div>
+
+        <div class="glass p-6">
+            <h2 class="font-magic text-xl text-blue-300 mb-4">📜 Riwayat Cerita</h2>
+            <div id="historyList" class="space-y-4 max-h-80 overflow-y-auto pr-2">
+                </div>
         </div>
 
         <div class="glass p-6">
             <h2 class="font-magic text-xl text-blue-300 mb-4">📸 Galeri Kenangan</h2>
             <div id="gallery" class="grid grid-cols-2 gap-4 mb-4"></div>
             <input type="file" id="upload" class="hidden" multiple onchange="handleFiles(this.files)">
-            <label for="upload" class="block w-full text-center bg-blue-800/30 border-2 border-dashed border-blue-400 py-4 rounded-2xl cursor-pointer hover:bg-blue-800/50 transition">
-                <span class="text-blue-200">Simpan Foto Kenangan</span>
-            </label>
+            <label for="upload" class="block w-full text-center bg-blue-800/30 border-2 border-dashed border-blue-400 py-4 rounded-2xl cursor-pointer">Tambah Foto</label>
         </div>
 
-        <p class="text-center text-[10px] text-blue-500 opacity-60 pb-10">Dibuat dengan kasih sayang oleh Seseorang yang Menyayangimu</p>
+        <p class="text-center text-[10px] text-blue-500 opacity-60 pb-10">Arulmodss Project v8.1 | Quantum Engine</p>
     </div>
 
     <script>
         const PIN = "biru";
-        const jawabanEmpati = [
-            "Terima kasih sudah berbagi cerita. Ingatlah, kamu adalah sosok yang luar biasa kuat, seperti elemen es yang teguh. ✨",
-            "Jangan pernah merasa sendiri ya. Istirahatlah sejenak, biarkan lagu Arijit Singh menenangkan hatimu. Kamu berharga. 💙",
-            "Setiap masalah pasti ada jalannya. Kamu hebat sudah bertahan sampai titik ini. Semangat terus ya! 😊",
-            "Taruh semua bebanmu di sini. Besok adalah hari yang baru, dan kamu akan bersinar lebih terang lagi. ✨",
-            "Kamu berhak mendapatkan kebahagiaan. Jangan biarkan awan mendung menutup senyum cantikmu hari ini. 🌀"
+        const jawaban = [
+            "Terima kasih sudah berbagi, kamu hebat hari ini! 💙",
+            "Jangan sedih ya, elemen es selalu menemanimu dalam ketenangan. ✨",
+            "Setiap cerita punya akhir yang indah, begitu juga ceritamu. 😊",
+            "Istirahatlah, kamu sudah melakukan yang terbaik. ❄️"
         ];
 
         function checkPass() {
-            const val = document.getElementById('passInput').value.toLowerCase();
-            if(val === PIN) {
+            if(document.getElementById('passInput').value.toLowerCase() === PIN) {
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('mainContent').classList.remove('hidden');
-                loadData();
-            } else { alert('Maaf, kata sandi kurang tepat. Silakan coba lagi ya.'); }
+                renderHistory();
+                renderPhotos();
+            } else { alert('Kata sandi salah, silakan coba lagi.'); }
         }
 
         function changeSong() {
-            const id = document.getElementById('songSelect').value;
-            document.getElementById('spotifyPlayer').src = `https://open.spotify.com/embed/track/${id}`;
+            document.getElementById('musicPlayer').src = document.getElementById('songSelect').value;
         }
 
-        function saveToLocal() {
-            const txt = document.getElementById('diaryBox').value;
-            if(txt.length < 5) return alert('Tuliskan sedikit ceritamu dulu ya...');
+        function saveCurhat() {
+            const input = document.getElementById('diaryBox');
+            if(!input.value) return;
+
+            const time = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+            const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
             
-            localStorage.setItem('privateDiary', txt);
-            const index = Math.floor(Math.random() * jawabanEmpati.length);
-            document.getElementById('solusiText').innerText = jawabanEmpati[index];
+            history.unshift({ date: time, text: input.value }); // Simpan yang terbaru di atas
+            localStorage.setItem('chatHistory', JSON.stringify(history));
+            
+            // Tampilkan jawaban AI
+            document.getElementById('solusiText').innerText = jawaban[Math.floor(Math.random() * jawaban.length)];
             document.getElementById('aiResponse').classList.remove('hidden');
-            alert('Ceritamu sudah tersimpan dengan aman.');
+            
+            input.value = '';
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+            const container = document.getElementById('historyList');
+            container.innerHTML = history.length ? '' : '<p class="text-xs text-blue-400 italic">Belum ada riwayat cerita...</p>';
+            
+            history.forEach(item => {
+                container.innerHTML += `
+                    <div class="p-4 bg-blue-900/30 border-l-4 border-blue-500 rounded-r-xl">
+                        <p class="text-[10px] text-blue-300 font-bold">${item.date}</p>
+                        <p class="text-sm text-blue-50 mt-1">${item.text}</p>
+                    </div>
+                `;
+            });
         }
 
         function handleFiles(files) {
-            const gallery = document.getElementById('gallery');
+            const photos = JSON.parse(localStorage.getItem('chatPhotos') || '[]');
             for (let file of files) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = "rounded-2xl w-full h-36 object-cover border border-blue-400/50 shadow-lg";
-                    gallery.appendChild(img);
-                    const photos = JSON.parse(localStorage.getItem('privatePhotos') || '[]');
                     photos.push(e.target.result);
-                    localStorage.setItem('privatePhotos', JSON.stringify(photos));
+                    localStorage.setItem('chatPhotos', JSON.stringify(photos));
+                    renderPhotos();
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function loadData() {
-            document.getElementById('diaryBox').value = localStorage.getItem('privateDiary') || '';
-            const photos = JSON.parse(localStorage.getItem('privatePhotos') || '[]');
+        function renderPhotos() {
+            const photos = JSON.parse(localStorage.getItem('chatPhotos') || '[]');
             const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
             photos.forEach(src => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.className = "rounded-2xl w-full h-36 object-cover border border-blue-400/30";
-                gallery.appendChild(img);
+                gallery.innerHTML += `<img src="${src}" class="rounded-2xl w-full h-36 object-cover border border-blue-400/30 shadow-lg">`;
             });
         }
     </script>
