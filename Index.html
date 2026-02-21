@@ -1,0 +1,37 @@
+<script>
+    // Database Solusi Random Quantum V8.0
+    const solusiMagic = [
+        "Sabar ya cantik, rintangan itu cuma buat bikin lu makin kuat kaya BoBoiBoy Ice! ❄️",
+        "Jangan sedih terus, mending dengerin Arijit Singh dulu biar galau lu estetik. 🎶",
+        "Lu itu berharga, nj! Jangan biarin satu masalah ngerusak senyum magic lu. 😊",
+        "Istirahat dulu, tarik napas. Masalah dunia gak bakal selesai kalau lu telat makan!",
+        "Inget, ada gw (dan cowok lu yang ganteng ini) yang selalu dukung lu 100%!",
+        "Kadang hidup emang kaya sinetron Indosiar, penuh drama tapi endingnya pasti bahagia!",
+        "Jangan dengerin omongan Adu Du di luar sana, lu tetep yang terbaik! 🌀"
+    ];
+
+    function saveToLocal() {
+        const curhat = document.getElementById('diaryBox').value;
+        if(curhat.length < 5) {
+            alert('Curhatnya pendek amat, su! Cerita lagi dong.');
+            return;
+        }
+
+        localStorage.setItem('blueDiary', curhat);
+        
+        // Kasih Solusi Otomatis
+        const randomSolusi = solusiMagic[Math.floor(Math.random() * solusiMagic.length)];
+        
+        // Tampilkan Box Solusi
+        const responseBox = document.getElementById('aiResponse');
+        responseBox.classList.remove('hidden');
+        document.getElementById('solusiText').innerText = randomSolusi;
+        
+        alert('Curhatan lu udah aman di memori HP, nj!');
+    }
+</script>
+
+<div id="aiResponse" class="hidden mt-4 p-4 bg-blue-400/20 border border-blue-300 rounded-2xl animate-bounce">
+    <p class="text-xs font-bold text-blue-200">✨ Pesan Magic Buat Lu:</p>
+    <p id="solusiText" class="text-sm italic text-white mt-1"></p>
+</div>
